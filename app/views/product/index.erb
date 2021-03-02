@@ -1,0 +1,19 @@
+<%if @products.count > 0 %>
+    
+    <ul class="collection with-header">
+        <li class="collection-header"><h4>Products</h4></li>
+        <% @products.each do |product| %>
+            <li class="collection-item">
+                <div>
+                    <p>Product <%= product.description %> <br>
+                    SKU/Item Number <%= product.sku %> </p>
+                    <a href="/product/<%= product.id %>" class="secondary-content">Open</a>
+                </div>
+            </li>
+        <% end %>
+    </ul>
+
+<% else %>
+    <h4> No Products Yet! </h4>
+    <button href="/products/new">Create New Product</button>
+<% end %>
