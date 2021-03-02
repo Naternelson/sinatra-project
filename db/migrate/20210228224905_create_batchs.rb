@@ -5,6 +5,7 @@ class CreateBatchs < ActiveRecord::Migration[5.2]
       t.string :secondary
       t.date :mfg
       t.date :exp
+      t.integer :product_id
       t.timestamps
     end
   end

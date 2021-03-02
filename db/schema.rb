@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2021_02_28_224905) do
     t.string "secondary"
     t.date "mfg"
     t.date "exp"
+    t.integer "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

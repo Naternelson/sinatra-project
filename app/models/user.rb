@@ -4,4 +4,5 @@ class User < ActiveRecord::Base
     validates_uniqueness_of(:email)
 
     has_many :products
+    has_many :batchs, through: :products
 end

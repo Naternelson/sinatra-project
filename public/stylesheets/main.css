@@ -1,0 +1,13 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+h1 {
+    font-size: 3.5rem;
+}
