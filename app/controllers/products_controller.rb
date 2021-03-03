@@ -17,4 +17,8 @@ class UsersController < ApplicationController
             redirect '/'
         end
     end
+
+    post '/products' do 
+        binding.pry
+    end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_02_222832) do
+ActiveRecord::Schema.define(version: 2021_03_02_233044) do
 
   create_table "batchs", force: :cascade do |t|
     t.string "primary"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2021_03_02_222832) do
     t.string "color"
     t.string "company"
     t.integer "user_id"
+    t.string "name"
   end
 
   create_table "users", force: :cascade do |t|
