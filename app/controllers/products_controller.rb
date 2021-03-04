@@ -45,4 +45,29 @@ class UsersController < ApplicationController
             redirect '/'
         end
     end
+
+    get '/products/:id' do 
+        if session[:user_id] 
+            if Product.find_by(id: params[:id]).user_id == session[:user_id]
+                @product = Product.find_by(id: params[:id])
+                erb :'product/show'
+            else
+                redirect '/products'
+            end
+        else
+            redirect '/'
+        end
+    end
+
+    delete '/products/:id' do
+        if session[:user_id] 
+            if Product.find_by(id: params[:id]).user_id == session[:user_id]
+                product = Product.find_by(id: params[:id])
+                product.delete if product
+            end
+            redirect '/products'
+        else
+            redirect '/'
+        end
+    end
 end
