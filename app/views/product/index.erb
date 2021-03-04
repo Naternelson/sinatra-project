@@ -5,9 +5,8 @@
         <% @products.each do |product| %>
             <li class="collection-item">
                 <div>
-                    <p>Product <%= product.description %> <br>
-                    SKU/Item Number <%= product.sku %> </p>
-                    <a href="/product/<%= product.id %>" class="secondary-content">Open</a>
+                <span><%= product.name %> -- <%= product.sku %> </span>
+                <a href="/products/<%= product.id %>" class="secondary-content">Open</a>
                 </div>
             </li>
         <% end %>

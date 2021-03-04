@@ -4,7 +4,6 @@ class UsersController < ApplicationController
         if session[:user_id]
             user = User.find_by(id: session[:user_id])
             @products = user.products
-            binding.pry
             erb :'/product/index'
         else
             redirect '/'
