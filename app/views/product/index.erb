@@ -1,5 +1,5 @@
 <%if @products.count > 0 %>
-    
+    <a href="/products/new">Create New Product</a>
     <ul class="collection with-header">
         <li class="collection-header"><h4>Products</h4></li>
         <% @products.each do |product| %>
@@ -11,6 +11,7 @@
             </li>
         <% end %>
     </ul>
+    
 
 <% else %>
     <h4> No Products Yet! </h4>

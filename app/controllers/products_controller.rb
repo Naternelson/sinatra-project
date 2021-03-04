@@ -23,7 +23,8 @@ class UsersController < ApplicationController
             p = params[:product]
             product = Product.new(name: p[:name], sku: p[:sku], description: p[:description], color: p[:color], company: p[:company])
             if product.save
-                p[:item_requirements].each do |i|
+                if !!p[:item_requirements]
+                    p[:item_requirements].each do |i|
                     ir = ItemRequirement.new()
                     ir.name = i[:name]
                     ir.length = i[:length]
@@ -32,6 +33,7 @@ class UsersController < ApplicationController
                     ir.length_required = (i[:length_required] == "on")
                     ir.save
                     product.item_requirements << ir
+                    end
                 end
                 user = User.find_by(id: session[:user_id])
                 user.products << product
