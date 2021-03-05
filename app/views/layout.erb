@@ -3,19 +3,62 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="/stylesheets/main.css" rel="stylesheet" type="text/css">
-    <title>Hello, world!</title>
+    <title>Product Management</title>
   </head>
-  <body class="container">
-
-    <!--ERB Yield block-->
-    <%= yield %>
-
+  <body>
+    <% user = User.find_by(id: session[:user_id]) %>
+    <div class="row">
+        <div class="col s12 m4 l3">
+            <ul class="sidenav sidenav-fixed">
+                <li><h4 class="center-align">Sidebar</h4></li>
+                <li><div class="divider"></div></li>
+                <li>
+                    <ul class="collapsible">
+                        <li class="bold">
+                            <div class="collapsible-header">Account</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="/account">My Account</a></li>
+                                    <li><a href="/account/logout">Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="bold">
+                            <div class="collapsible-header bold">Products</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="/products">All Products</a><li>
+                                    <li><a href="/products/new">New Product</a><li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="bold">
+                            <div class="collapsible-header bold">Orders</div>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="/orders">All Orders</a><li>
+                                    <li><a href="/orders/new">New Order</a><li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col s12 m8 offset-m1 xl7">
+            <!--ERB Yield block-->
+            <div class="container"><%= yield %> </div>
+        </div>
+    <div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script> 
-      var el = document.querySelector('.tabs');
-      var instance = M.Tabs.init(el, {});
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.collapsible');
+            var instances = M.Collapsible.init(elems)
+        });
     </script>
     </body>
 </html>

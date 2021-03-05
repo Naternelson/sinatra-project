@@ -4,7 +4,7 @@ class UsersController < ApplicationController
         if session[:user_id]
             user = User.find_by(id: session[:user_id])
             @products = user.products
-            erb :'/product/index', layout: :dashboard
+            erb :'/product/index'
         else
             redirect '/'
         end
@@ -44,6 +44,20 @@ class UsersController < ApplicationController
         else
             redirect '/'
         end
+    end
+
+    get '/products/:id/edit' do 
+        if session[:user_id]
+            @product = Product.find_by(id: params[:id])
+            if @product.user.id == session[:user_id]
+                erb :'/product/edit'
+            else 
+                @product = nil
+                redirect '/products'
+            end
+        else
+            redirect '/'
+        end 
     end
 
     get '/products/:id' do 

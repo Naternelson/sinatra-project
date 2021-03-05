@@ -11,7 +11,7 @@ class ApplicationController < Sinatra::Base
     register Sinatra::Flash
 
     get '/' do
-        erb :main
+        erb :main, layout: :'home-layout'
     end
 
     post '/login' do
@@ -31,6 +31,7 @@ class ApplicationController < Sinatra::Base
 
         if user.save
           session[:user_id] = user.id
+          flash[:message] = "Successfully Logged In"
           redirect "/account"
         else
           user = nil
@@ -42,7 +43,7 @@ class ApplicationController < Sinatra::Base
       end
     end
 
-    get '/logout' do 
+    get '/account/logout' do 
       session.clear
       erb :main
     end
