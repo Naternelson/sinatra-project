@@ -1,61 +1,15 @@
 <% i = 1 %>
-<form action=<%= "/products/#{@product.id}" %> method="POST"> 
-    <input type="hidden" name="_method" value="PUT">
-    <h4>Edit Product</h4>
-    <% ["name", "sku", "description", "color", "company"].each do |field| %>
-        <div class="row">
-            <div class="col s12 input-field">
-                <input type="text" name= <%= "product[#{field}]" %> id= <%="product_#{field}" %>>
-                <label for=<%="product_#{field}" %>> <%= field.capitalize %> </label>
-            </div>
-        </div>
-    <% end %>
-
-    <% fields = [
-        {name: "name", value: @product.name},
-        {name: "sku", value: @product.sku},  
-        {name: "description", value: @product.description},
-        {name: "color", value: @product.color},
-        {name: "company", value: @product.company},
-     ]
-     fields.each do |field| %>
-        <div class="row">
-            <div class="col s12 input-field">
-                <input type="text" name= <%= "product[#{field[:name]}]" %> id= <%="product_#{field[:name]}" %> value=<%= field[:value]%>>
-                <label for=<%="product_#{field[:name]}" %>> <%= field[:name].capitalize %> </label>
-            </div>
-        </div>
-    <% end %>
-
-
-
-    <div id="item_requirements"></div>
-    <div><button class="waves-effect waves-light btn" id="button_item_code" type="button">Add New Item Code</button></div>
-    <div><button class="waves-effect waves-light btn" type="submit">Submit</button></div>
-</form>
-
-
-<script>
-        const item_code_wrapper = document.getElementById("item_requirements")
-        document.getElementById("button_item_code").addEventListener("click", function(){
-            console.log("hello world")
-            var templ = document.getElementById("item_code_template").content
-            var clone = templ.cloneNode(true)
-            console.log(clone)
-            item_code_wrapper.appendChild(clone)
-        })
-</script>
 
 <template id="item_code_template">
     <div class="row">
         <div class="col s12"><em >Item Code</em></div>
-        <% fields = [{name: :name, label: "Code Name", type: "text"}, 
+        <% field_specs = [{name: :name, label: "Code Name", type: "text"}, 
          {name: "length", label: "Character Length", type: "number"}, 
          {name: "description", label: "Description", type: "text"}, 
          {name: "required", label: "Require Code", type: "checkbox"}, 
          {name: "length_required", label: "Require Exact Character Length", type: "checkbox"}] %>
         
-        <% fields.each do |field| %>
+        <% field_specs.each do |field| %>
             <div class="input-field col s12">
                 <% if field[:type] == "checkbox" %>
                     <p>
@@ -65,7 +19,7 @@
                     </label>
                     </p>    
                 <% else %>
-                    <input type=<%= field[:type] %> name=<%= "product[item_requirements][][#{field[:name]}]"%> id=<%= i.to_s %> >
+                    <input type=<%= field[:type] %> name=<%= "product[item_requirements][][#{field[:name]}]"%> id=<%= i.to_s %>>
                     <label for=<%= i.to_s %>> <%= field[:label] %> </label>
                 <% end %>
             </div>
@@ -73,5 +27,75 @@
         <% end %>
     </div>
 </template>
+
+
+
+<form action=<%= "/products/#{@product.id}" %> method="POST"> 
+    <input type="hidden" name="_method" value="PUT">
+    <h4>Edit Product</h4>
+
+    <% fields = [
+        {name: "name", value: @product.name},
+        {name: "sku", value: @product.sku},  
+        {name: "description", value: @product.description},
+        {name: "color", value: @product.color},
+        {name: "company", value: @product.company},
+     ] 
+     fields.each do |field| %>
+        <div class="row">
+            <div class="col s12 input-field">
+                <input type="text" name= <%= "product[#{field[:name]}]" %> id= <%="product_#{field[:name]}" %> value="<%= field[:value] %>">
+                <label for=<%="product_#{field[:name]}" %>> <%= field[:name].capitalize %> </label>
+            </div>
+        </div>
+    <% end %>
+
+
+
+    <div id="item_requirements">
+        <div class="row">
+            <div class="col s12"><h5>Item Code</h5><br></div>
+            <% @product.item_requirements.each do |req| %>
+                <% field_specs.each do |field|  %>
+                    <div class="input-field col s12">
+                        <% if field[:type] == "checkbox" %>
+                            <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" name=<%= "product[item_requirements][][#{field[:name]}]"%> value='<%= req.send("#{field[:name]}")%>' />
+                                <span><%= field[:label] %></span>
+                            </label>
+                            </p>    
+                        <% else %>
+                            <input type=<%= field[:type] %> name=<%= "product[item_requirements][][#{field[:name]}]"%> id=<%= i.to_s %> value='<%= req.send("#{field[:name]}")%>'>
+                            <label for=<%= i.to_s %>> <%= field[:label] %> </label>
+                        <% end %>
+                    </div>
+                    <% i += 1 %>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+
+
+    <div><button class="waves-effect waves-light btn" id="button_item_code" type="button">Add New Item Code</button></div>
+    <br>
+    <div class="divider"></div>
+    <br>
+    <div><button class="waves-effect waves-light btn" type="submit">Submit</button></div>
+</form>
+
+
+<script>
+        const item_code_wrapper = document.getElementById("item_requirements")
+        document.getElementById("button_item_code").addEventListener("click", addItemCode)
+
+        function addItemCode(){
+            var templ = document.getElementById("item_code_template").content
+            var clone = templ.cloneNode(true)
+            console.log(clone)
+            item_code_wrapper.appendChild(clone)
+        }
+</script>
+
 
 
