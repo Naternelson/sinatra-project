@@ -73,6 +73,34 @@ class UsersController < ApplicationController
         end
     end
 
+    patch '/products/:id' do 
+        if session[:user_id]
+            p = params[:product]
+            product = Product.find_by(id: params[:id])
+            if product && product.user.id == session[:user_id]
+                product.update(name: p[:name], sku: p[:sku], description: p[:description], color: p[:color], company: p[:company])
+                if !!p[:item_requirements]
+                    p[:item_requirements].each do |i|
+                    ir = ItemRequirement.find_by(id: i[:id])
+                    ir = ItemRequirement.new if !ir 
+                    ir.name = i[:name]
+                    ir.length = i[:length]
+                    ir.description = i[:description]
+                    ir.required = (i[:required] == "on")
+                    ir.length_required = (i[:length_required] == "on")
+                    ir.save
+                    product.item_requirements << ir
+                    end
+                end
+                redirect "/products/#{product.id}"
+            else
+                redirect "/products"
+            end
+        else
+            redirect '/'
+        end  
+    end
+
     delete '/products/:id' do
         if session[:user_id] 
             if Product.find_by(id: params[:id]).user_id == session[:user_id]
