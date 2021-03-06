@@ -20,6 +20,13 @@ class OrdersController < ApplicationController
         redirect '/orders'
     end
 
+    get '/orders/:id' do 
+        redirect_if_not_logged_in
+        find_order
+        check_owner(@order.product,'/orders')
+        erb :'order/show'
+    end
+
     helpers do 
         def order_params(parameters)
             order_fields = [:order_num, :amount, :received_on, :due_by]
@@ -38,6 +45,10 @@ class OrdersController < ApplicationController
             return "Complete" if order_obj.status == 2
             return "Paused" if order_obj.status == 3
             return "Error"
+        end
+
+        def find_order
+            @order =Order.find_by(id: params[:id])
         end
 
     end

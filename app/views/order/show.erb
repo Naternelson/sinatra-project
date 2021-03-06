@@ -1,0 +1,56 @@
+<h4>Order ID: <%= @order.order_num %></h4>
+<div class="divider"></div>
+<div class="row">
+    <div class="col s3"><a href="/orders/<%= @order.id %>/build"><p class="center-align" >Open Order</p></a></div>
+    <div class="col s3"><a href="/orders"><p class="center-align" >Back to Orders</p></a></div>
+    <div class="col s3"><a href="/orders/<%= @order.id %>/edit"><p class="center-align" >Edit Order</p></a></div>
+    <div class="col s3"><a class="modal-trigger" href="#delete_confirmation"><p class="center-align">Delete Order</p></a></div>
+</div>
+<div class="section">
+    <div class="row">
+        <div class="col s4">
+            <div class="card-panel blue-grey darken-1">
+                <h6 class="white-text center-align"><%="PLACEHOLDER" %></h6>
+                <p class=" white-text center-align">Current</p>
+            </div>
+        </div>
+        <div class="col s4">
+            <div class="card-panel blue-grey darken-1">
+                <h6 class="white-text center-align"><%="PLACEHOLDER" %></h6>
+                <p class=" white-text center-align">Remainder</p>
+            </div>
+        </div>
+        <div class="col s4">
+            <div class="card-panel blue-grey darken-1">
+                <h6 class="white-text center-align"><%=@order.amount %></h6>
+                <p class=" white-text center-align">Total</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="section">
+    <div class="row">
+        <div class="col s6"><p>Received On: </p><span><%= @order.received_on %></span></div>
+        <div class="col s6"><p>Due By: </p><span><%= @order.due_by %></span></div>
+    </div>
+    <div class="row">
+        <div class="col s3">
+            <p class="center-align">PRODUCT<br>
+            <em><%= @order.product.name%></em></p>
+        </div>
+        <div class="col s3">
+            <p class="center-align">SKU<br>
+            <em><%= @order.product.sku%></em></p>
+        </div>
+        <div class="col s3">
+            <p class="center-align">COLOR<br>
+            <em><%= @order.product.color%></em></p>
+        </div>
+        <div class="col s3">
+            <p class="center-align">ITEM CODES<br>
+            <em><%= @order.product.item_requirements.count%></em></p>
+        </div> 
+    </div>
+    <p class="center-align"><a href="/products/<%= @order.product.id %>">Go To Product</a></p>
+</div>
