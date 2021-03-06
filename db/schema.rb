@@ -34,9 +34,9 @@ ActiveRecord::Schema.define(version: 2021_03_05_020005) do
   create_table "orders", force: :cascade do |t|
     t.integer "order_num"
     t.integer "amount"
-    t.datetime "recieved_on"
+    t.datetime "received_on"
     t.datetime "due_by"
-    t.string "status"
+    t.integer "status"
     t.integer "product_id"
   end
 

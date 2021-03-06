@@ -1,12 +1,8 @@
 class UsersController < ApplicationController
 
     get '/account' do
-        if session[:user_id]
-            @user = User.find_by(id: session[:user_id])
-            erb :'/account/show'
-        else
-            redirect '/'
-        end
+      redirect_if_not_logged_in
+      erb :'/account/show'
     end
 
     get '/account/edit' do 
@@ -20,8 +16,7 @@ class UsersController < ApplicationController
           session[:user_id] = user.id
           redirect "/account"
         else
-          user = nil
-          redirect '/'
+          redirect_if_not_logged_in
         end
       end
   
@@ -34,12 +29,10 @@ class UsersController < ApplicationController
             flash[:message] = "Successfully Logged In"
             redirect "/account"
           else
-            user = nil
-            redirect '/'
+            redirect_if_not_logged_in
           end
         else
-          user = nil
-          redirect '/'
+          redirect_if_not_logged_in
         end
       end
   

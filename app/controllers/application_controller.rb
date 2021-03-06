@@ -25,7 +25,15 @@ class ApplicationController < Sinatra::Base
       end
 
       def check_owner(obj, page='/account/logout')
-        redirect page unless obj.user == current_user
+        redirect page unless check_owner_without_redirect(obj)
+      end
+
+      def check_owner_without_redirect(obj)
+        obj.user == current_user
+      end
+
+      def user_orders
+        @user.products.collect {|p| p.orders }.flatten.uniq
       end
       
 
