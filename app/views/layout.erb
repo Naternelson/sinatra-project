@@ -58,6 +58,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.collapsible');
             var instances = M.Collapsible.init(elems)
+            var toastHtml= "<%= flash[:notice] %>"
+            M.toast({html: toastHtml})
         });
     </script>
     </body>

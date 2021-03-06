@@ -1,0 +1,43 @@
+<%
+    o_fields = [
+        {name: "order_num", label: "Order ID", type: "text"},
+        {name: "amount", label: "Amount Ordered", type: "number"},
+        {name: "received_on", label: "Date Recieved", type: "date"},
+        {name: "due_by", label: "Due By", type: "date"}
+    ]
+%>
+
+
+<form action="/orders" method="POST">
+    <div class="row">
+        <div class="col s12"><h4 class="center-align"> Create New Order </h4></div>
+        <% o_fields.each do |field| %>
+            <div class="input-field col s12">
+                <input type="<%= field[:type]%>" name="order[<%= field[:name] %>]" id="order_<%=field[:name]%>" >
+                <label for="order_<%= field[:name]%>"> <%= field[:label]%> <label>
+            </div>
+        <% end %>
+        <div class="input-field col s12">
+            <select name="order[product]">
+                <option value="" disabled selected>Select Product</option>
+                <% @products.each do |p| %>
+                    <option value=<%= p.id %>> <%= "#{p.name}  -  #{p.sku}" %> </option>
+                <% end %>
+            </select>
+            <label>Product</label>
+        </div>
+        <div class="col s12"><a href="/products/new">Create New Product</a></div>
+    </div>
+    
+    <div class="row">
+        <div class="col s3 offset-s2"><button class="btn" type="reset">Reset</button></div>
+        <div class="col s3 offset-s2"><button class="btn" type="submit">Submit</button></div>
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+    });
+</script>

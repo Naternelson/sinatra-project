@@ -14,40 +14,6 @@ class ApplicationController < Sinatra::Base
         erb :main, layout: :'home-layout'
     end
 
-    post '/login' do
-      user = User.find_by(email: params[:email])
-      if user && user.authenticate(params[:password])
-        session[:user_id] = user.id
-        redirect "/account"
-      else
-        user = nil
-        redirect '/'
-      end
-    end
-
-    post '/signup' do
-      if params[:password] == params[:confirm_password]
-        user = User.new(email: params[:email], password: params[:password])
-
-        if user.save
-          session[:user_id] = user.id
-          flash[:message] = "Successfully Logged In"
-          redirect "/account"
-        else
-          user = nil
-          redirect '/'
-        end
-      else
-        user = nil
-        redirect '/'
-      end
-    end
-
-    get '/account/logout' do 
-      session.clear
-      erb :main
-    end
-
     helpers do
 
       def current_user
@@ -57,5 +23,11 @@ class ApplicationController < Sinatra::Base
       def redirect_if_not_logged_in
           redirect '/' unless current_user
       end
+
+      def check_owner(obj, page='/account/logout')
+        redirect page unless obj.user == current_user
+      end
+      
+
     end
 end
