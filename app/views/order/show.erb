@@ -10,13 +10,13 @@
     <div class="row">
         <div class="col s4">
             <div class="card-panel blue-grey darken-1">
-                <h6 class="white-text center-align"><%="PLACEHOLDER" %></h6>
+                <h6 class="white-text center-align"><%= @order.items.count %></h6>
                 <p class=" white-text center-align">Current</p>
             </div>
         </div>
         <div class="col s4">
             <div class="card-panel blue-grey darken-1">
-                <h6 class="white-text center-align"><%="PLACEHOLDER" %></h6>
+                <h6 class="white-text center-align"><%=@order.amount - @order.items.count %></h6>
                 <p class=" white-text center-align">Remainder</p>
             </div>
         </div>
@@ -31,8 +31,8 @@
 <div class="divider"></div>
 <div class="section">
     <div class="row">
-        <div class="col s6"><p>Received On: </p><span><%= @order.received_on %></span></div>
-        <div class="col s6"><p>Due By: </p><span><%= @order.due_by %></span></div>
+        <div class="col s6"><p>Received On: <span><%= @order.received_on.strftime("%D") %></span></p></div>
+        <div class="col s6"><p>Due By: <span><%= @order.due_by.strftime("%D") %></p></span></div>
     </div>
     <div class="row">
         <div class="col s3">

@@ -64,9 +64,8 @@ class ProductsController < ApplicationController
                 ir.name = i[:name]
                 ir.length = i[:length]
                 ir.description = i[:description]
-                ir.unique = (i[:unique] == "on")
-                binding.pry
-                ir.length_required = (i[:length_required] == "on")
+                ir.unique = (i[:unique] == "on" || i[:unique] == "true")
+                ir.length_required = (i[:length_required] == "on" || i[:length_required] == "true")
                 ir.save
                 product.item_requirements << ir
             end

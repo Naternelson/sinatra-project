@@ -63,10 +63,7 @@
                                 <input type="checkbox" 
                                     class="filled-in" 
                                     name=<%= "product[item_requirements][][#{field[:name]}]" %> 
-                                    value='<%= req.send("#{field[:name]}")%>' 
-                                    <% binding.pry %>
                                     <%="checked" if req.send("#{field[:name]}")%> />
-
                                 <span><%= field[:label] %></span>
                             </label>
                             </p>    
