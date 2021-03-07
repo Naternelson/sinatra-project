@@ -5,7 +5,7 @@
             <li class="collection-item">
                 <div>
                     <a href="/orders/<%=order.id%>"><span class="bold"> <%= order.order_num %></span> <span> <%= order.product.name %></span></a>
-                    <span class="bold secondary-content"><%= status(order) %></span>
+                    <span class="bold secondary-content"><%= order_status(order) %></span>
                 </div>
             </a></li>
         <% end %>

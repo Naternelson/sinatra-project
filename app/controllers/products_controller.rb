@@ -37,8 +37,10 @@ class ProductsController < ApplicationController
                 end
             end
             @user.products << product
+            flash[:notice] = "Product Added"
             redirect '/products'
-        else 
+        else
+            flash[:error] = "Could not add Product" 
             redirect '/products/new'
         end 
     end
@@ -65,17 +67,18 @@ class ProductsController < ApplicationController
         product.update(name: p[:name], sku: p[:sku], description: p[:description], color: p[:color], company: p[:company])
         if !!p[:item_requirements]
             p[:item_requirements].each do |i|
-            ir = ItemRequirement.find_by(id: i[:id])
-            ir = ItemRequirement.new if !ir 
-            ir.name = i[:name]
-            ir.length = i[:length]
-            ir.description = i[:description]
-            ir.required = (i[:required] == "on")
-            ir.length_required = (i[:length_required] == "on")
-            ir.save
-            product.item_requirements << ir
+                ir = ItemRequirement.find_by(id: i[:id])
+                ir = ItemRequirement.new if !ir 
+                ir.name = i[:name]
+                ir.length = i[:length]
+                ir.description = i[:description]
+                ir.required = (i[:required] == "on")
+                ir.length_required = (i[:length_required] == "on")
+                ir.save
+                product.item_requirements << ir
             end
         end
+        flash[:notice] = "Product Added"
         redirect "/products/#{product.id}"
     end
 
@@ -84,6 +87,7 @@ class ProductsController < ApplicationController
         product = Product.find_by(id: params[:id])
         check_owner(product, '/products')
         product.delete 
+        flash[:notice] = "Produced Deleted"
         redirect '/products'
     end
 end

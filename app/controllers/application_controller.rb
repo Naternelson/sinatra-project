@@ -21,11 +21,21 @@ class ApplicationController < Sinatra::Base
       end
   
       def redirect_if_not_logged_in
-          redirect '/' unless current_user
+        if !current_user
+          flash[:notice] = "Please log in"
+          redirect '/' 
+        end
       end
 
       def check_owner(obj, page='/account/logout')
-        redirect page unless check_owner_without_redirect(obj)
+        if !check_owner_without_redirect(obj)
+          flash[:error] = "Restricted #{split_class_name(obj)}"
+          redirect page
+        end
+      end
+
+      def split_class_name(obj)
+        obj.class.name.split(/([A-Z][a-z]*)/).reject{ |e| e.to_s.empty? }.join(" ")
       end
 
       def check_owner_without_redirect(obj)

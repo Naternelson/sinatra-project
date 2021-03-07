@@ -17,6 +17,7 @@ class OrdersController < ApplicationController
         order = Order.create(order_params(params[:order]))
         order.status = 0
         add_product_to_order(params[:order][:product], order)
+        flash[:notice] = "Order Added"
         redirect '/orders'
     end
 
@@ -39,7 +40,16 @@ class OrdersController < ApplicationController
             product.orders << order_obj
         end
 
-        def status(order_obj)
+        
+        def find_order
+            @order =Order.find_by(id: params[:id])
+            if !@order
+                flash[:error] = "Could Not Find Order"
+                redirect '/orders'
+            end
+        end
+
+        def order_status(order_obj)
             return "Not Started" if order_obj.status == 0
             return "Open" if order_obj.status == 1
             return "Complete" if order_obj.status == 2
@@ -47,9 +57,6 @@ class OrdersController < ApplicationController
             return "Error"
         end
 
-        def find_order
-            @order =Order.find_by(id: params[:id])
-        end
 
     end
 end

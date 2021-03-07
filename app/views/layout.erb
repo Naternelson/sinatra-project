@@ -57,9 +57,20 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.collapsible');
-            var instances = M.Collapsible.init(elems)
-            var toastHtml= "<%= flash[:notice] %>"
-            M.toast({html: toastHtml})
+            var instances = M.Collapsible.init(elems);
+            var toastHtml= "";
+            <% if flash[:notice] %>
+                toastHtml = "<%= flash[:notice] %>";
+                M.toast({html: toastHtml});
+            <% end %>
+            <% if flash[:error] %>
+                toastHtml ="<%= flash[:error] %>";
+                M.toast({html: toastHtml, classes:'red'});
+            <% end %>
+            <% if flash[:success] %>
+                toastHtml ="<%= flash[:success] %>";
+                M.toast({html: toastHtml, classes: "green"});
+            <% end %>
         });
     </script>
     </body>
