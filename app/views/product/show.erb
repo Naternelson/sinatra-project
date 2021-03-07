@@ -23,8 +23,8 @@
   <% @product.item_requirements.each do |req| %>
     <div class="divider"></div>
     <br>  
-    <% if req.required %>
-      <div class="chip">Required Code</div>
+    <% if req.unique %>
+      <div class="chip"> Unique Code</div>
     <%end%>
     <% if req.length_required %>
       <div class="chip">Exact Length Required</div>

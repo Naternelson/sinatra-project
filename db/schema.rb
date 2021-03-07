@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_05_020005) do
+ActiveRecord::Schema.define(version: 2021_03_07_041941) do
 
   create_table "batchs", force: :cascade do |t|
     t.string "primary"
@@ -22,13 +22,25 @@ ActiveRecord::Schema.define(version: 2021_03_05_020005) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "item_codes", force: :cascade do |t|
+    t.string "code"
+    t.integer "item_id"
+    t.integer "item_requirement_id"
+  end
+
   create_table "item_requirements", force: :cascade do |t|
     t.string "name"
     t.integer "length"
     t.string "description"
-    t.boolean "required"
+    t.boolean "unique"
     t.boolean "length_required"
     t.integer "product_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.integer "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "orders", force: :cascade do |t|

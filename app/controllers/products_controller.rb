@@ -1,14 +1,6 @@
 class ProductsController < ApplicationController
 
     get '/products' do
-        # # if session[:user_id]
-        # #     user = User.find_by(id: session[:user_id])
-        
-        #     @products = user.products
-        #     erb :'/product/index'
-        # else
-        #     redirect '/'
-        # end
         redirect_if_not_logged_in
         @products = @user.products
         erb :'/product/index'
@@ -30,17 +22,17 @@ class ProductsController < ApplicationController
                     ir.name = i[:name]
                     ir.length = i[:length]
                     ir.description = i[:description]
-                    ir.required = (i[:required] == "on")
+                    ir.unique = (i[:unique] == "on")
                     ir.length_required = (i[:length_required] == "on")
                     ir.save
                     product.item_requirements << ir
                 end
             end
             @user.products << product
-            flash[:notice] = "Product Added"
+            flash[:notice] = ["Product Added"]
             redirect '/products'
         else
-            flash[:error] = "Could not add Product" 
+            flash[:error] = ["Could not add Product"]
             redirect '/products/new'
         end 
     end
@@ -72,13 +64,14 @@ class ProductsController < ApplicationController
                 ir.name = i[:name]
                 ir.length = i[:length]
                 ir.description = i[:description]
-                ir.required = (i[:required] == "on")
+                ir.unique = (i[:unique] == "on")
+                binding.pry
                 ir.length_required = (i[:length_required] == "on")
                 ir.save
                 product.item_requirements << ir
             end
         end
-        flash[:notice] = "Product Added"
+        flash[:notice] = ["Product Updated"]
         redirect "/products/#{product.id}"
     end
 
@@ -87,7 +80,7 @@ class ProductsController < ApplicationController
         product = Product.find_by(id: params[:id])
         check_owner(product, '/products')
         product.delete 
-        flash[:notice] = "Produced Deleted"
+        flash[:notice] = ["Produced Deleted"]
         redirect '/products'
     end
 end

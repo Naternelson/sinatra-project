@@ -22,14 +22,14 @@ class ApplicationController < Sinatra::Base
   
       def redirect_if_not_logged_in
         if !current_user
-          flash[:notice] = "Please log in"
+          flash[:notice] = ["Please log in"]
           redirect '/' 
         end
       end
 
       def check_owner(obj, page='/account/logout')
         if !check_owner_without_redirect(obj)
-          flash[:error] = "Restricted #{split_class_name(obj)}"
+          flash[:error] = ["Restricted #{split_class_name(obj)}"]
           redirect page
         end
       end
@@ -45,7 +45,18 @@ class ApplicationController < Sinatra::Base
       def user_orders
         @user.products.collect {|p| p.orders }.flatten.uniq
       end
-      
+
+      def check_owner_of_order
+        check_owner(@order.product, '/orders')
+      end
+
+      def find_order
+        @order =Order.find_by(id: params[:id])
+        if !@order
+          flash[:error] = ["Could Not Find Order"]
+          redirect '/orders'
+        end
+      end
 
     end
 end

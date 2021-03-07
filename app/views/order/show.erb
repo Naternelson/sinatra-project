@@ -1,7 +1,7 @@
 <h4>Order ID: <%= @order.order_num %></h4>
 <div class="divider"></div>
 <div class="row">
-    <div class="col s3"><a href="/orders/<%= @order.id %>/build"><p class="center-align" >Open Order</p></a></div>
+    <div class="col s3"><a href="/orders/<%= @order.id %>/items/new"><p class="center-align" >Open Order</p></a></div>
     <div class="col s3"><a href="/orders"><p class="center-align" >Back to Orders</p></a></div>
     <div class="col s3"><a href="/orders/<%= @order.id %>/edit"><p class="center-align" >Edit Order</p></a></div>
     <div class="col s3"><a class="modal-trigger" href="#delete_confirmation"><p class="center-align">Delete Order</p></a></div>

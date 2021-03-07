@@ -11,7 +11,7 @@ puts
 puts "Seed Products Created"
 puts
 user.products.each do |p| 
-    p.item_requirements << ItemRequirement.create(name: "Device", length: 6, description: "DUMMY", length_required: true, required: true)
+    p.item_requirements << ItemRequirement.create(name: "Device", length: 6, description: "DUMMY", length_required: true, unique: true)
     puts "Adding item Requirements to products"
 end
 puts

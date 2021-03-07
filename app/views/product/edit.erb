@@ -6,7 +6,7 @@
         <% field_specs = [{name: :name, label: "Code Name", type: "text"}, 
          {name: "length", label: "Character Length", type: "number"}, 
          {name: "description", label: "Description", type: "text"}, 
-         {name: "required", label: "Require Code", type: "checkbox"}, 
+         {name: "unique", label: "Unique Code", type: "checkbox"}, 
          {name: "length_required", label: "Require Exact Character Length", type: "checkbox"}] %>
         
         <% field_specs.each do |field| %>
@@ -60,7 +60,13 @@
                         <% if field[:type] == "checkbox" %>
                             <p>
                             <label>
-                                <input type="checkbox" class="filled-in" name=<%= "product[item_requirements][][#{field[:name]}]"%> value='<%= req.send("#{field[:name]}")%>' <%="checked" if req.send("#{field[:name]}")%> />
+                                <input type="checkbox" 
+                                    class="filled-in" 
+                                    name=<%= "product[item_requirements][][#{field[:name]}]" %> 
+                                    value='<%= req.send("#{field[:name]}")%>' 
+                                    <% binding.pry %>
+                                    <%="checked" if req.send("#{field[:name]}")%> />
+
                                 <span><%= field[:label] %></span>
                             </label>
                             </p>    

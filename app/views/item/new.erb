@@ -1,0 +1,50 @@
+<div class="row"><!-- Order Name-->
+    <div class="col s12">
+        <h2 class="center-align">ORDER ID: <%= @order.order_num %></h2>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="row"> <!-- Order Information-->
+    <div class="col s4">
+        <div class="card-panel blue-grey darken-1">
+            <h6 class="white-text center-align"><%= @order.items.count %></h6>
+            <p class=" white-text center-align">Current Count</p>
+        </div>
+    </div>
+    <div class="col s4">
+        <div class="card-panel blue-grey darken-1">
+            <h6 class="white-text center-align"><%= @order.amount - @order.items.count %></h6>
+            <p class=" white-text center-align">Remainder</p>
+        </div>
+    </div>
+    <div class="col s4">
+        <div class="card-panel blue-grey darken-1">
+            <h6 class="white-text center-align"><%= @order.amount %></h6>
+            <p class=" white-text center-align">Order Amount</p>
+        </div>      
+    </div>
+</row>
+<div class="divider"></div>
+
+<div class="row"><!-- New Item Form-->
+    <div class="col s12"><h3 class="center-align grey-text text-darken-2">Order Input</h3></div>
+    <div class="col s12">
+        <% reqs = @order.product.item_requirements %>
+        <form action="/orders/<%= @order.id %>/items" method="POST">
+            <% reqs.each do |req| %>
+                <div class="row">
+                    <div class="col s12">
+                        <input type="text" class="validate" name="items[][<%=req.id%>]" pattern="<%= input_pattern(req) %>" <%= "requried" if req.unique %> id="<%= req.name %>" <%= "autofocus" if reqs.first == req %> >
+                        <label for="<%=req.name%>"> <%= req.name %> </label>
+                        <span class="helper-text" data-error="input should be <%= req.length %> characters long"></span>
+                    </div>
+                </div>
+            <% end %>
+            <div class="row">
+                <div class="col s12">
+                    <p class="center-align"><button class="waves-effect waves-teal btn-flat" type="submit">Add</button></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

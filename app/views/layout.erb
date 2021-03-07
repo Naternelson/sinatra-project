@@ -60,16 +60,22 @@
             var instances = M.Collapsible.init(elems);
             var toastHtml= "";
             <% if flash[:notice] %>
-                toastHtml = "<%= flash[:notice] %>";
-                M.toast({html: toastHtml});
+                <% flash[:notice].each do |message|%>
+                    toastHtml = "<%= message %>";
+                    M.toast({html: toastHtml});
+                <% end %>
             <% end %>
             <% if flash[:error] %>
-                toastHtml ="<%= flash[:error] %>";
-                M.toast({html: toastHtml, classes:'red'});
+                <%  flash[:error].each do |message| %>
+                    toastHtml ="<%= message %>";
+                    M.toast({html: toastHtml, classes:'red'});
+                <% end %>
             <% end %>
             <% if flash[:success] %>
-                toastHtml ="<%= flash[:success] %>";
-                M.toast({html: toastHtml, classes: "green"});
+                <% flash[:success].each do |message| %>
+                    toastHtml ="<%= message %>";
+                    M.toast({html: toastHtml, classes: "green"});
+                <% end %>
             <% end %>
         });
     </script>
