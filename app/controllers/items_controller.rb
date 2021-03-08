@@ -25,6 +25,15 @@ class ItemsController < ApplicationController
         redirect "/orders/#{@order.id}/items/new"
     end
 
+    delete '/order/:id/items/:item_id' do 
+        check_item_code(params[:item_id])
+        item = Item.find_by(id: params[:item_id])
+        item.item_codes.each {|code| code.delete} 
+        item.delete 
+        flash[:notice] = ["Item Deleted"]
+        redirect "/orders/#{@order.id}/edit"
+    end
+
 
     helpers do 
         def input_pattern(req)

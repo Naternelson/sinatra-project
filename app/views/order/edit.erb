@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col s6">
+    <h4 class="center-align">Edit Order</h4>
+    <div class="divider"></div>
+        <form method="POST" action="/orders/<%=@order.id%>">
+            <input type="hidden" name="_method" value="PATCH">
+            <div class="row">
+                <div class="col s12">
+                    <input type="text" name="order[order_num]" value = "<%=@order.order_num%>" id="order_num">
+                    <label for="order_num">Order Number</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <input type="number" name="order[amount]" value = "<%=@order.amount%>" id="order_amount">
+                    <label for="order_amount">Amount Ordered</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <input type="text" class="datepicker" name="order[received_on]" value = "<%=@order.received_on%>" id="order_received_on">
+                    <label for="order_received_on">Received On</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <input type="text" class="datepicker" name="order[due_by]" value = "<%=@order.due_by%>" id="order_due_by">
+                    <label for="order_due_by">Due By</label>
+                </div>
+            </div>
+            <button class="btn" type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="col s6">
+        <h4 class="center-align">Order Items</h4>  
+        <div class="divider"></div>     
+        <table>
+            <thead>
+                <tr>
+                    <% order_item_headers.each do |header|%>
+                        <th><%= header %></th>
+                    <% end %>
+                    <th>Edit Row</th>
+                    <th>Delete Row</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @order.items.each do |row| %>
+                    <tr>
+                        <% order_item_header_ids.each do |id| %>
+                            <% found = false%>
+                            <% row.item_codes.each do |ic| %>
+                                <% if id == ic.item_requirement_id %>
+                                    <td> <%= ic.code %> </td>
+                                    <%found = true%>
+                                <% end %>
+                            <% end %>
+                            <%if found == false %>
+                                <td></td>
+                            <% end %>
+                        <% end %>
+                        <td><button type="button" data-target="edit_form" data-id:="<%=row.id%>" class="btn modal-trigger">Edit</button></td>
+                        <td>
+                            <form method="POST" action="/order/<%=@order.id%>/items/<%=row.id%>">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="edit_form" class="modal">
+    <form>
+        <div class="modal-content">
+            <h4>Edit Row</h4>
+        
+    </form>
+    <div class="modal-content">
+    </div>
+    <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems, {});
+  });
+
+</script>

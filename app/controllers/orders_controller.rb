@@ -21,10 +21,18 @@ class OrdersController < ApplicationController
         redirect '/orders'
     end
 
+    get '/orders/:id/edit' do 
+        redirect_if_not_logged_in
+        find_order
+        check_owner(@order.product,'/orders')
+        erb :'order/edit'
+    end
+
     get '/orders/:id' do 
         redirect_if_not_logged_in
         find_order
         check_owner(@order.product,'/orders')
+        binding.pry
         erb :'order/show'
     end
 
@@ -40,9 +48,6 @@ class OrdersController < ApplicationController
             product.orders << order_obj
         end
 
-        
-        
-
         def order_status(order_obj)
             return "Not Started" if order_obj.status == 0
             return "Open" if order_obj.status == 1
@@ -51,6 +56,34 @@ class OrdersController < ApplicationController
             return "Error"
         end
 
+        def date_format(date)
+            if date.class.name == "Time"
+                 date.strftime("%D")
+            else
+                "No date yet"
+            end
+        end
+
+        def order_items
+            data = []
+            @order.items.each do |item|
+                row = {}
+                row[:id] = item.id
+                order_item_header_ids.each do |id|
+                    row[id] = item.item_codes.find {|ic| ic.item_requirement_id == id}
+                end
+                data << row
+            end
+            data
+        end
+
+        def order_item_headers
+            @order.product.item_requirements.collect{|req| req.name}
+        end
+
+        def order_item_header_ids
+            @order.product.item_requirements.collect{|req| req.id}
+        end
 
     end
 end
