@@ -43,4 +43,15 @@ class UsersController < ApplicationController
     flash[:notice] = ["Successfully Logged Off"]
     redirect '/'
   end
+
+  helpers do 
+    def full_name
+      name = "#{current_user.first_name} #{current_user.last_name}"
+      if !name
+        "No Name Yet"
+      else 
+        name
+      end
+    end
+  end
 end

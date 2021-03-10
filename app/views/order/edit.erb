@@ -30,6 +30,13 @@
             </div>
             <button class="btn" type="submit">Submit</button>
         </form>
+        <ul>
+        <%@order.items.each do |item| %>
+            <% add_list_item(item).each do |code| %>
+                <%= code %>
+            <%end%>
+        <% end %>
+        </ul> 
     </div>
 
     <div class="col s6">

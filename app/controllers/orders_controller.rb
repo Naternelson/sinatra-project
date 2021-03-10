@@ -32,7 +32,6 @@ class OrdersController < ApplicationController
         redirect_if_not_logged_in
         find_order
         check_owner(@order.product,'/orders')
-        binding.pry
         erb :'order/show'
     end
 
@@ -85,5 +84,10 @@ class OrdersController < ApplicationController
             @order.product.item_requirements.collect{|req| req.id}
         end
 
+        def add_list_item(item)
+            item.item_codes.collect do |ic|
+                "<li>#{ic.code}</li>"
+            end
+        end
     end
 end
