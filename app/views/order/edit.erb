@@ -30,13 +30,6 @@
             </div>
             <button class="btn" type="submit">Submit</button>
         </form>
-        <ul>
-        <%@order.items.each do |item| %>
-            <% add_list_item(item).each do |code| %>
-                <%= code %>
-            <%end%>
-        <% end %>
-        </ul> 
     </div>
 
     <div class="col s6">
@@ -67,7 +60,7 @@
                                 <td></td>
                             <% end %>
                         <% end %>
-                        <td><button type="button" data-target="edit_form" data-id:="<%=row.id%>" class="btn modal-trigger">Edit</button></td>
+                        <td><button type="button" href="/orders/<%=@order.id%>/items/<%=@row.id%>/edit"class="btn modal-trigger">Edit</button></td>
                         <td>
                             <form method="POST" action="/order/<%=@order.id%>/items/<%=row.id%>">
                                 <input type="hidden" name="_method" value="DELETE">
@@ -81,18 +74,6 @@
     </div>
 </div>
 
-<div id="edit_form" class="modal">
-    <form>
-        <div class="modal-content">
-            <h4>Edit Row</h4>
-        
-    </form>
-    <div class="modal-content">
-    </div>
-    <div class="modal-footer">
-    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

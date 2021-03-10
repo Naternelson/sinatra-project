@@ -1,4 +1,16 @@
 class ItemsController < ApplicationController
+    
+    get '/orders/:id/items/:item_id/edit' do 
+        verify_order 
+        if check_item_code(params[:item_id])
+            @item = Item.find_by id: params[:item_id]
+            erb :'item/edit'
+        else
+            flash[:error] = ["Item not found"]
+            redirect "/orders/#{@order.id}/edit"
+        end
+    end
+
     get '/orders/:id/items/new' do 
         verify_order
         erb :'item/new'
@@ -23,6 +35,12 @@ class ItemsController < ApplicationController
         @order.items << item
         verify_completion
         redirect "/orders/#{@order.id}/items/new"
+    end
+
+    patch '/orders/:id/items/:item_id' do 
+        verify_order 
+        item = Item.find_by id: params[item_id]
+        binding.pry
     end
 
     delete '/order/:id/items/:item_id' do 
