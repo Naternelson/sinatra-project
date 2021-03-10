@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col s12"><h4 class="cener-align">ITEM From Order: <%=@item.order.order_num%></h4></div>
+    <form method="POST" action="/orders/<%= @item.order.id %>/items/<%= @item.id %>"
+        <div class="divider"></div>
+        <% @item.item_codes.each do |item_code| %>
+        <div class="input-field col s12">
+            <input name="item[item_codes][][code]" type="text" value="<%=item_code.code%>" id="<%= @item.item_requirement.name%>">
+            <label for="<%= @item.item_requirement.name%>"><%= @item.item_requirement.name%></label>
+        </div>
+        <% end %>
+        <input type="hidden" name="_method" value="PATCH">
+        <div class="col s12"><button type="submit" class="btn center-align">Submit</div>
+    </form>
+</div>
